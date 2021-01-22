@@ -6,8 +6,6 @@
 
 Gitee：https://gitee.com/Tencent/APIJSON
 
-
-
 ## 示例
 
 Java端：https://gitee.com/greyzeng/apijson-sample
