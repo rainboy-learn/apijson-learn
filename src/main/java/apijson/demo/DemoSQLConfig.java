@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import static apijson.framework.APIJSONConstant.*;
-import static apijson.orm.AbstractVerifier.getAccessMap;
+import static apijson.orm.AbstractVerifier.*;
 
 
 /**SQL 配置
@@ -58,6 +58,7 @@ public class DemoSQLConfig extends APIJSONSQLConfig {
 		//		TABLE_KEY_MAP.put(User.class.getSimpleName(), "apijson_user");
 		//		TABLE_KEY_MAP.put(Privacy.class.getSimpleName(), "apijson_privacy");
 		TABLE_KEY_MAP.put(Stone.class.getSimpleName(),"b_stone");
+		ACCESS_MAP.put(Stone.class.getSimpleName(), getAccessMap(Stone.class.getAnnotation(MethodAccess.class)));
 		//主键名映射
 		SIMPLE_CALLBACK = new SimpleCallback() {
 
@@ -103,7 +104,7 @@ public class DemoSQLConfig extends APIJSONSQLConfig {
 		RAW_MAP.put("to_days(now())-to_days(`date`)<=7","");  // 给 @having 使用
 
 
-		AbstractVerifier.ACCESS_MAP.put(Stone.class.getSimpleName(), getAccessMap(Stone.class.getAnnotation(MethodAccess.class)));
+
 
 	}
 

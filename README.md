@@ -38,7 +38,6 @@ DemoSQLConfig.java这个文件中提供了数据库的配置信息
 运行DemoApplication
 
 
-
 ### 测试
 
 在Postman中新增一个POST请求，请求的URL是：
@@ -201,6 +200,33 @@ body
   "time:start|duration|end": "1611282106759|10|1611282106769"
 }
 ```
+### 高级查询
+
+- [分页查询](https://vincentcheng.github.io/apijson-doc/zh/grammar.html#%E5%88%86%E9%A1%B5)
+
+- [级联查询](https://vincentcheng.github.io/apijson-doc/zh/grammar.html#%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2)
+
+- [分组](https://vincentcheng.github.io/apijson-doc/zh/grammar.html#%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2)
+
+
+### 数据修改
+
+接口地址：http://localhost:8080/post
+
+```json
+{
+  "Moment": {
+    "content": "今天天气不错，到处都是提拉米苏雪",
+    "userId": 38710
+  },
+  "tag": "Moment"
+}
+```
+
+因为可以修改数据，所以这里涉及到和登录的问题
+
+[权限配置问题](https://github.com/Tencent/APIJSON/issues/12)
+
 ### 登录
 
 接口的查询可以可以配置是否需要登录，登录接口：http://127.0.0.1:8080/login，
@@ -209,7 +235,7 @@ body
 ```json
 {
   "phone": "13000038710",
-  "password": "apijson"
+  "password": "666666"
 }
 ```
 账号和密码，可以到apijson_user表里面查询
@@ -218,6 +244,7 @@ body
 ### 生成接口文档
 
 [APIAuto](https://github.com/TommyLemon/APIAuto)
+
 
 ### 参考资料
 

@@ -31,6 +31,7 @@ import apijson.framework.BaseModel;
  * @author Lemon
  */
 @MethodAccess(
+
 		GET = {},
 		GETS = {OWNER, ADMIN},
 		POST = {UNKNOWN, ADMIN},
