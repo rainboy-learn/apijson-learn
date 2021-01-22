@@ -203,6 +203,23 @@ body
   "time:start|duration|end": "1611282106759|10|1611282106769"
 }
 ```
+### 登录
+
+接口的查询可以可以配置是否需要登录，登录接口：http://127.0.0.1:8080/login，
+发送请求
+
+```json
+{
+  "phone": "13000038710",
+  "password": "apijson"
+}
+```
+账号和密码，可以到apijson_user表里面查询
+
+
+### 生成接口文档
+
+[APIAuto](https://github.com/TommyLemon/APIAuto)
 
 ### 参考资料
 

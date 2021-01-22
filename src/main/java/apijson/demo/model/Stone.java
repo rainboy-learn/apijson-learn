@@ -2,11 +2,10 @@ package apijson.demo.model;
 
 import apijson.MethodAccess;
 
-import static apijson.RequestRole.ADMIN;
-import static apijson.RequestRole.UNKNOWN;
+import static apijson.RequestRole.*;
 
 @MethodAccess(
-        POST = {UNKNOWN, ADMIN},
+        POST = {LOGIN, ADMIN},
         DELETE = {ADMIN}
 )
 public class Stone {
