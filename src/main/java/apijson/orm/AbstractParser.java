@@ -73,12 +73,12 @@ public abstract class AbstractParser<T> implements Parser<T>, ParserCreator<T>, 
 	}
 
 	@NotNull
-	protected Visitor<T> visitor;
+	protected Visitor<T> visitor; // 来访者
 	@NotNull
 	@Override
 	public Visitor<T> getVisitor() {
 		if (visitor == null) {
-			visitor = new Visitor<T>() {
+			visitor = new Visitor<T>() { //创建一个新的对象
 
 				@Override
 				public T getId() {
@@ -318,7 +318,7 @@ public abstract class AbstractParser<T> implements Parser<T>, ParserCreator<T>, 
 		verifier = createVerifier().setVisitor(getVisitor()); //创建一个验证器
 
 		if (RequestMethod.isPublicMethod(requestMethod) == false) { //是否公开的请求方法
-			try {
+			try { //进行相应的验证
 				if (isNeedVerifyLogin()) {
 					onVerifyLogin();
 				}
@@ -364,7 +364,7 @@ public abstract class AbstractParser<T> implements Parser<T>, ParserCreator<T>, 
 
 		Exception error = null;
 		sqlExecutor = createSQLExecutor(); //创建一个执行器
-		onBegin();	// ?
+		onBegin();	// 如果是Get 就是什么也不做
 		try {
 			queryDepth = 0;
 			Log.d(TAG, "parseResponse  request = " + request
