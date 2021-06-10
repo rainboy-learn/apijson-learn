@@ -223,7 +223,7 @@ public abstract class AbstractSQLExecutor implements SQLExecutor {
 
 			case GET:
 			case GETS:
-				result = getCacheItem(sql, position, config.getCache());
+				result = getCacheItem(sql, position, config.getCache());//得到缓存的结果
 				Log.i(TAG, ">>> select  result = getCache('" + sql + "', " + position + ") = " + result);
 				if (result != null) {
 					cachedSQLCount ++;

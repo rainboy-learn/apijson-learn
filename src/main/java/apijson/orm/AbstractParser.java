@@ -313,11 +313,11 @@ public abstract class AbstractParser<T> implements Parser<T>, ParserCreator<T>, 
 		Log.d(TAG, "parseResponse  startTime = " + startTime
 				+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n\n ");
 
-		requestObject = request;
+		requestObject = request; //请求的JSON
 
-		verifier = createVerifier().setVisitor(getVisitor());
+		verifier = createVerifier().setVisitor(getVisitor()); //创建一个验证器
 
-		if (RequestMethod.isPublicMethod(requestMethod) == false) {
+		if (RequestMethod.isPublicMethod(requestMethod) == false) { //是否公开的请求方法
 			try {
 				if (isNeedVerifyLogin()) {
 					onVerifyLogin();
@@ -331,7 +331,7 @@ public abstract class AbstractParser<T> implements Parser<T>, ParserCreator<T>, 
 		}
 
 		//必须在parseCorrectRequest后面，因为parseCorrectRequest可能会添加 @role
-		if (isNeedVerifyRole() && globleRole == null) {
+		if (isNeedVerifyRole() && globleRole == null) { //是否是一个需要验证的角色
 			try {
 				setGlobleRole(RequestRole.get(requestObject.getString(JSONRequest.KEY_ROLE)));
 				requestObject.remove(JSONRequest.KEY_ROLE);
@@ -340,14 +340,14 @@ public abstract class AbstractParser<T> implements Parser<T>, ParserCreator<T>, 
 			}
 		}
 
-		try {
+		try {//设定一个全局的配置 格式化 数字库 表 分析 缓存
 			setGlobleFormat(requestObject.getBoolean(JSONRequest.KEY_FORMAT));
 			setGlobleDatabase(requestObject.getString(JSONRequest.KEY_DATABASE));
 			setGlobleSchema(requestObject.getString(JSONRequest.KEY_SCHEMA));
-			setGlobleExplain(requestObject.getBoolean(JSONRequest.KEY_EXPLAIN));
+			setGlobleExplain(requestObject.getBoolean(JSONRequest.KEY_EXPLAIN)); //分析
 			setGlobleCache(requestObject.getString(JSONRequest.KEY_CACHE));
 
-			requestObject.remove(JSONRequest.KEY_FORMAT);
+			requestObject.remove(JSONRequest.KEY_FORMAT); //删除对应的配置项
 			requestObject.remove(JSONRequest.KEY_DATABASE);
 			requestObject.remove(JSONRequest.KEY_SCHEMA);
 			requestObject.remove(JSONRequest.KEY_EXPLAIN);
@@ -355,20 +355,24 @@ public abstract class AbstractParser<T> implements Parser<T>, ParserCreator<T>, 
 		} catch (Exception e) {
 			return extendErrorResult(requestObject, e);
 		}
-
+			//json转成字符串
 		final String requestString = JSON.toJSONString(request);//request传进去解析后已经变了
 
 
-		queryResultMap = new HashMap<String, Object>();
+
+		queryResultMap = new HashMap<String, Object>(); // 创建一个查询的hashmap 用于缓存
 
 		Exception error = null;
-		sqlExecutor = createSQLExecutor();
-		onBegin();
+		sqlExecutor = createSQLExecutor(); //创建一个执行器
+		onBegin();	// ?
 		try {
 			queryDepth = 0;
+			Log.d(TAG, "parseResponse  request = " + request
+					+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n\n ");
+			// 就是就这个 onObjectParse 解析了JSON 拿到了 value的数值
 			requestObject = onObjectParse(request, null, null, null, false);
 
-			onCommit();
+			onCommit(); // ?
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -667,7 +671,7 @@ public abstract class AbstractParser<T> implements Parser<T>, ParserCreator<T>, 
 	}
 
 	/**获取Request或Response内指定JSON结构
-	 * @param table
+	 * @param table1
 	 * @param method
 	 * @param tag
 	 * @param version
@@ -774,27 +778,29 @@ public abstract class AbstractParser<T> implements Parser<T>, ParserCreator<T>, 
 			return null;
 		}
 
-		int type = arrayConfig == null ? 0 : arrayConfig.getType();
+		int type = arrayConfig == null ? 0 : arrayConfig.getType(); // arryconfig type?
 
-		String[] arr = StringUtil.split(parentPath, "/");
-		if (arrayConfig == null || arrayConfig.getPosition() == 0) {
-			int d = arr == null ? 1 : arr.length + 1;
+		String[] arr = StringUtil.split(parentPath, "/"); // split by /
+		if (arrayConfig == null || arrayConfig.getPosition() == 0) { //如果不是是array的对象
+			int d = arr == null ? 1 : arr.length + 1; // arr 是路径的 split
 			if (queryDepth < d) {
 				queryDepth = d;
-				int maxQueryDepth = getMaxQueryDepth();
+				int maxQueryDepth = getMaxQueryDepth(); // 最大的路径深度，应该是最大的解析深度
 				if (queryDepth > maxQueryDepth) {
 					throw new IllegalArgumentException(parentPath + "/" + name + ":{} 的深度(或者说层级) 为 " + queryDepth + " 已超限，必须在 1-" + maxQueryDepth + " 内 !");
 				}
 			}
 		}
 
-		ObjectParser op = createObjectParser(request, parentPath, name, arrayConfig, isSubquery).parse();
+		//这里开始解析 得到 parser对象
+		ObjectParser op = createObjectParser(request, parentPath, name, arrayConfig, isSubquery)
+				.parse();// 创建了一个ObjectParse,并解析，得到结果
 
 
 		JSONObject response = null;
 		if (op != null) {//TODO SQL查询结果为空时，functionMap和customMap还有没有意义？
 			if (arrayConfig == null) {//Common
-				response = op.setSQLConfig().executeSQL().response();
+				response = op.setSQLConfig().executeSQL().response();//这里真的执行得到了结果
 			}
 			else {//Array Item Child
 				int query = arrayConfig.getQuery();

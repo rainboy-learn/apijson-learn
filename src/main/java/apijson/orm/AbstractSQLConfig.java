@@ -186,7 +186,7 @@ public abstract class AbstractSQLConfig implements SQLConfig {
 
 	private String procedure;
 
-	public SQLConfig setProcedure(String procedure) {
+	public SQLConfig setProcedure(String procedure) { // 设定 https://jingyan.baidu.com/article/f71d6037c6e1ca1ab641d1c0.html
 		this.procedure = procedure;
 		return this;
 	}
@@ -196,7 +196,7 @@ public abstract class AbstractSQLConfig implements SQLConfig {
 
 	public AbstractSQLConfig(RequestMethod method) {
 		setMethod(method);
-	}
+	} //构造函数
 	public AbstractSQLConfig(RequestMethod method, String table) {
 		this(method);
 		setTable(table);
@@ -223,7 +223,7 @@ public abstract class AbstractSQLConfig implements SQLConfig {
 	@Override
 	public boolean isPrepared() {
 		return prepared;
-	}
+	} // 返回 是否预编译
 	@Override
 	public AbstractSQLConfig setPrepared(boolean prepared) {
 		this.prepared = prepared;
@@ -234,7 +234,7 @@ public abstract class AbstractSQLConfig implements SQLConfig {
 		return main;
 	}
 	@Override
-	public AbstractSQLConfig setMain(boolean main) {
+	public AbstractSQLConfig setMain(boolean main) { // main是什么作用
 		this.main = main;
 		return this;
 	}
@@ -267,7 +267,7 @@ public abstract class AbstractSQLConfig implements SQLConfig {
 	@Override
 	public boolean isDistinct() {
 		return distinct;
-	}
+	} //是否distinct
 	@Override
 	public SQLConfig setDistinct(boolean distinct) {
 		this.distinct = distinct;
@@ -391,7 +391,7 @@ public abstract class AbstractSQLConfig implements SQLConfig {
 	}
 	@JSONField(serialize = false)
 	@Override
-	public String getTablePath() {
+	public String getTablePath() {// `sys`.`table` AS alias_name
 		String q = getQuote();
 
 		String sch = getSQLSchema();
